@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shannon Rodrigues Resume</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/angular@1.8.2/angular.min.js"></script>
+    
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .container {
+            border: 1px solid #007bff;
+            padding: 30px;
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            color: #007bff;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 0.5s;
+        }
+        .contact-info, .section {
+            margin-bottom: 20px;
+        }
+        .contact-info {
+            text-align: center;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+        .education-table, .technical-skills-list, .certifications-list, .achievements-list, .positions-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 1.5s;
+        }
+        .education-table th, .education-table td {
+            border: 1px solid #007bff;
+            padding: 8px;
+            text-align: left;
+        }
+        .education-table th {
+            background-color: #f1f8ff;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 1.5s;
+        }
+        .btn-primary {
+            background-color: #V;
+            border-color: #007bff;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #EFCFE3;
+            border-color: #004085;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .section {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards 2s;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Slide-in animations for sections */
+        @keyframes slideInLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .slide-in-left {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+
+        /* Hover effect on sections */
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 10px rgba(0, 123, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body ng-app="resumeApp" ng-controller="resumeController">
+
+<div class="container">
+    <h1 class="slide-in-left">Shannon Rodrigues</h1>
+    <div class="contact-info">
+        <p>Email: <a href="mailto:rodrigues.shnnn@gmail.com">rodrigues.shnnn@gmail.com</a> | Mobile: 7715919073</p>
+        <p>GitHub: <a href="https://github.com/Rodrigues555" target="_blank">https://github.com/Rodrigues555</a></p>
+        <p>Second Year, Electronics and Computer Science Engineering</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Career Objective</div>
+        <p>To pursue a career and be a part of a progressive organization that gives a scope to enhance my knowledge and utilize my skills towards the growth of the organization.</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Education</div>
+        <table class="education-table">
+            <tr>
+                <th>Degree</th>
+                <th>Name of Institute</th>
+                <th>University/Board</th>
+                <th>Year of Passing</th>
+            </tr>
+            <tr>
+                <td>B.E.</td>
+                <td>Fr. Conceicao Rodrigues College of Engineering, Bandra</td>
+                <td>Mumbai University</td>
+                <td>Pursuing</td>
+            </tr>
+            <tr>
+                <td>HSC</td>
+                <td>Sardar Vallhabhai Patel College of Engineering</td>
+                <td>Maharashtra State Board</td>
+                <td>2023</td>
+            </tr>
+            <tr>
+                <td>SSC</td>
+                <td>St. Paul's High School, Mira Road</td>
+                <td>Maharashtra State Board</td>
+                <td>2021</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Projects Undertaken</div>
+        <ul>
+            <li><strong>Digital Electronics webpage</strong>: This project uses HTML, CSS, JavaScript, Bootstrap, AngularJS, and ReactJS to create an interactive platform for simulating digital electronic circuits.</li>
+            <li><strong>Online Legal Aid System</strong>: A simple online legal aid system using object-oriented concepts in Java.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Technical Skills</div>
+        <ul class="technical-skills-list">
+            <li>Web development (HTML/CSS/JS, Bootstrap)</li>
+            <li>C/C++ (Intermediate)</li>
+            <li>PostgreSQL (Intermediate)</li>
+            <li>Unreal Engine</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Other Skills</div>
+        <ul class="Other-skills-list">
+            <li>Figma (UI design)</li>
+            <li>Blender (3D modeling)</li>
+            <li>Canva</li>
+            <li>Digital Illustrations</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Positions of Responsibility</div>
+        <ul class="positions-list">
+            <li>SE Representative and Junior Marketer, ACM CRCE (June 2024 – Present)</li>
+            <li>Design & Decor Team, TedxCRCE (February 2024)</li>
+            <li>Design & Decor & Event Management Team, Rotaract CRCE (2024)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Hobbies</div>
+        <p>Volunteering</p>
+        <p>Singing</p>
+        <p>Dancing</p>
+        <p>Learning technical languages</p>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" ng-click="downloadPDF()">Download Resume</button>
+    </div

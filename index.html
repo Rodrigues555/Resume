@@ -11,6 +11,10 @@
     
     <!-- jsPDF for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Add this line in the head section of your HTML file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <!-- Include the download.js file -->
+    <script src="index.js"></script>
 
     <style>
         body {
@@ -29,15 +33,15 @@
             background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            animation: fadeIn 1.5s forwards;
+            opacity: 1;
+            animation: none;
         }
         h1 {
             text-align: center;
             font-size: 30px;
             color: #007bff;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards 0.5s;
+            opacity: 1;
+            animation: none;
         }
         .contact-info, .section {
             margin-bottom: 20px;
@@ -51,15 +55,15 @@
             color: #007bff;
             border-bottom: 2px solid #007bff;
             margin-bottom: 10px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 1s;
+            opacity: 1;
+            animation: none;
         }
         .education-table, .technical-skills-list, .certifications-list, .achievements-list, .positions-list {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards 1.5s;
+            opacity: 1;
+            animation: none;
         }
         .education-table th, .education-table td {
             border: 1px solid #007bff;
@@ -72,17 +76,17 @@
         ul {
             list-style-type: disc;
             padding-left: 20px;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards 1.5s;
+            opacity: 1;
+            animation: none;
         }
         .btn-primary {
-            background-color: #V;
+            background-color: #007bff;
             border-color: #007bff;
             font-size: 16px;
             transition: background-color 0.3s ease;
         }
         .btn-primary:hover {
-            background-color: #EFCFE3;
+            background-color: #0056b3;
             border-color: #004085;
         }
         a {
@@ -99,14 +103,14 @@
             background-color: #f9f9f9;
             border-radius: 8px;
             margin-bottom: 20px;
-            opacity: 0;
-            animation: fadeIn 1.5s forwards 2s;
+            opacity: 1;
+            animation: none;
         }
         .text-center {
             text-align: center;
         }
 
-        /* Animations */
+        /* Remove animations */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -116,7 +120,6 @@
             }
         }
         
-        /* Slide-in animations for sections */
         @keyframes slideInLeft {
             0% {
                 transform: translateX(-100%);
@@ -128,7 +131,7 @@
             }
         }
         .slide-in-left {
-            animation: slideInLeft 1s ease-out forwards;
+            animation: none;
         }
 
         /* Hover effect on sections */
@@ -141,7 +144,7 @@
 </head>
 <body ng-app="resumeApp" ng-controller="resumeController">
 
-<div class="container">
+<div class="container" id="resume-content">
     <h1 class="slide-in-left">Shannon Rodrigues</h1>
     <div class="contact-info">
         <p>Email: <a href="mailto:rodrigues.shnnn@gmail.com">rodrigues.shnnn@gmail.com</a> | Mobile: 7715919073</p>
@@ -171,7 +174,7 @@
             </tr>
             <tr>
                 <td>HSC</td>
-                <td>Sardar Vallhabhai Patel College of Engineering</td>
+                <td>Sardar Vallhabhai Patel College of comerce and science</td>
                 <td>Maharashtra State Board</td>
                 <td>2023</td>
             </tr>
@@ -199,6 +202,7 @@
             <li>C/C++ (Intermediate)</li>
             <li>PostgreSQL (Intermediate)</li>
             <li>Unreal Engine</li>
+            <li>python</li>
         </ul>
     </div>
 
@@ -231,4 +235,39 @@
 
     <div class="text-center">
         <button class="btn btn-primary" ng-click="downloadPDF()">Download Resume</button>
-    </div
+    </div>
+</div>
+
+<script>
+    angular.module('resumeApp', []).controller('resumeController', function($scope) {
+        $scope.downloadPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const content = document.getElementById('resume-content');
+
+            html2canvas(content).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // A4 width in mm
+                const pageHeight = 295; // A4 height in mm
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    doc.addPage();
+                    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                doc.save('resume.pdf');
+            });
+        };
+    });
+</script>
+
+</body>
+</html>
